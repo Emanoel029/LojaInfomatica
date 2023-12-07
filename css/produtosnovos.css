@@ -1,18 +1,18 @@
-#new-productrs {
+#new-products {
   margin: 30px 0px;
 }
 
-.header-new-productrs {
+.header-new-products {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.header-new-productrs h1 {
+.header-new-products h1 {
   font-weight: bold;
 }
 
-.header-new-productrs a {
+.header-new-products a {
   color: #0156ff;
   font-size: 13px;
 }

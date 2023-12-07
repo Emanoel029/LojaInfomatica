@@ -1,0 +1,25 @@
+.content-sponsors {
+  overflow: hidden; /*todos os elementos que utrapassarem a largura "sumam"*/
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+
+.slider-sponsors {
+  display: flex;
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.slider-sponsors img {
+  max-width: 100%;
+  height: auto;
+  margin-right: 20px;
+}

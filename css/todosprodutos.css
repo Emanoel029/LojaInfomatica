@@ -1,0 +1,35 @@
+.product-filter-brands ul {
+  display: flex;
+}
+
+.product-filter-brands ul li {
+  list-style: none;
+  font-size: 16px;
+  margin-right: 32px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #838383;
+  text-align: center;
+}
+
+/*Quando o elemento estiver ativo (menu dos produtos*/
+.product-filter-brands ul li.product-brand-active {
+  border-bottom: 2px solid #0156ff;
+  color: #000;
+}
+
+.notebook-products,
+.cpu-products,
+.monitor-products {
+  display: flex;
+  margin-top: 30px;
+}
+
+.product-cover {
+  margin-right: 20px;
+}
+
+.product-cover img {
+  height: fit-content; /*a img vai tentar se adaptar ao tamanho do container*/
+  width: 300px;
+}
