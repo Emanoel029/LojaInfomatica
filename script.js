@@ -86,8 +86,7 @@ window.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(moveSlider);
 });
 
-/* Slider Depoimentos
-
+//Slider Depoimentos
 window.addEventListener("DOMContentLoaded", () => {
   const testimonials = document.querySelectorAll(".testimonial");
   const controls = document.querySelectorAll(".controls-testimonial span");
@@ -114,7 +113,5 @@ window.addEventListener("DOMContentLoaded", () => {
       testimonialShow.style.display = "block";
     });
   });
-
   firstControl.classList.add("active-testimonial");
 });
-*/

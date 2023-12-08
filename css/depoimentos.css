@@ -1,0 +1,35 @@
+.content-testimonial {
+  background-color: #f5f7ff;
+  width: 90%;
+  margin: 0 auto; /*centralizar a div*/
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  box-sizing: border-box; /*com essa propriedade ele vai sempre respeitar 90% de largura mesmo no moble*/
+}
+
+.name-testimonial {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*A div q pega todos os sapn das bolinhas de depoimento*/
+.controls-testimonial {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 30px;
+}
+
+/*Desenho da bolinha de depoimento*/
+.controls-testimonial span {
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background-color: #cacdd8;
+  cursor: pointer;
+}
+
+.controls-testimonial span.active-testimonial {
+  background-color: #0156ff;
+}
