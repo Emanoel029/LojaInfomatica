@@ -1,0 +1,26 @@
+.info-quality {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /*as 3 colunas os espaçamentos iguais*/
+  padding: 40px;
+}
+
+.card-quality {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.card-quality h1 {
+  font-size: 18px;
+}
+
+.card-quality h2 {
+  width: 300px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #00000080;
+}
