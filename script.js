@@ -145,6 +145,8 @@ function addProductTocart(event) {
   const productCard = event.target.closest(".card-new-products"); //antecesor mais perto onde está o click
   const productName = productCard.querySelector(".info-product h3").textContent;
   const priceText = productCard.querySelector(".new-price").textContent;
+  const productimg = productCard.querySelector(".img-product");
+  const srcProduct = productimg.getAttribute("src");
   const price = parseFloat(priceText.replace("R$", ""));
 
   const quantityElement = productCard.querySelector(".number-quantity");
@@ -162,6 +164,7 @@ function addProductTocart(event) {
       productsArray.push({
         productName: productName,
         price: price,
+        productimg: srcProduct,
         quantity: quantity,
       });
     }
@@ -170,6 +173,7 @@ function addProductTocart(event) {
       productsArray.splice(existingProductIndex, 1);
     }
   }
+
   updateCards();
 }
 
@@ -187,4 +191,59 @@ decreaseButtons.forEach((button) => {
 
 addCardButtons.forEach((button) => {
   button.addEventListener("click", addProductTocart);
+});
+
+// PG carrinho de compra
+
+const inputCep = document.querySelector("#cep");
+const inputStreet = document.querySelector("#street");
+const inputCity = document.querySelector("#city");
+const inputState = document.querySelector("#state");
+const inputNeighborhood = document.querySelector("#neighborhood");
+const inputNumber = document.querySelector("#number");
+
+function buscarCep() {
+  //trim() remove espaço do início e do final
+  const typedCep = inputCep.value.trim().replace(/\D/g, "");
+
+  //Macha a api com o cep que foi digitado pelo usuário
+  fetch(`https://viacep.com.br/ws/${typedCep}/json/`)
+    .then((response) => {
+      if (!response.ok) {
+        console.erro("Não foi possível obter os dados do CEP");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      inputCity.value = data.localidade;
+      inputState.value = data.uf;
+      inputNeighborhood.value = data.bairro;
+      inputStreet.value = data.logradouro;
+    })
+    .catch((erro) => {
+      console.erro("Erro:", erro);
+    });
+}
+//
+
+window.addEventListener("DOMContentLoaded", function () {
+  const tbody = document.querySelector(".info-product-order tbody");
+
+  for (const product of productsArray) {
+    const row = this.document.createElement("tr");
+    const nameCel = this.document.createElement("td");
+    nameCel.innerHTML = `<div class="product-cart">
+                        <img src="${product.product}" alt="${product.productName}" width="100px"/>
+                        ${product.productName} </div>`;
+
+    const priceCell = document.createElement("td");
+    priceCell.textContent = `R$ ${product.price.toFixed(2)}`;
+
+    const quantityCell = document.createElement("td");
+    quantityCell.textContent = product.quantity;
+
+    const subtotalCell = document.createElement("td");
+    const subtotal = product.price * product.quantity;
+    subtotalCell.textContent = `R$${subtotal.toFixed(2)}`;
+  }
 });

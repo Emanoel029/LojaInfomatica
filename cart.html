@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <title>Loja Informática Code Start</title>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="info-header">
+        <div class="openig-hours">
+          <p><span>seg-sex:</span> 9:00-17:30</p>
+        </div>
+        <div class="our-address">
+          <p>Visite nossa loja no endereço Rua da Code Start, 123 ou <span>Entre em contato conosco</span></p>
+        </div>
+        <div class="store-contacts">
+          <div class="cellphones">
+            <p>Telefone: (XX) 99999 - 9999</p>
+          </div>
+          <div class="social-icons">
+            <img src="./assets/facebook.svg" alt="facebook">
+            <img src="./assets/instagram.svg" alt="instagram">
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation-header">
+        <div class="logo">
+          <img src="./assets/logo.svg" alt="logo">
+        </div>
+        <nav class="menu">
+          <ul>
+            <li><a href="#">CPUs</a></li>
+            <li><a href="#">Notebooks</a></li>
+            <li><a href="#">Monitores</a></li>
+            <li><a href="#">Entre em contato</a></li>
+          </ul>
+        </nav>
+        <div class="action-icons">
+          <img src="./assets/search.svg" alt="Busca" class="search">
+          <div class="cart">
+            <a href="cart.html">
+              <img src="./assets/cart.svg" alt="Carrinho de compra">
+              <p class="item-cart">0</p>
+            </a>
+          </div>
+          <div class="mobile-menu-icon">&#9776;</div> <!--cria o meu sanduiche-->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li>Carrinho</li>
+      </ol>
+    </div>
+  </section>
+  <section id="cart">
+    <div class="container">
+      <div class="general-content-form">
+        <div class="order-cart">
+          <form action="">
+            <div class="titles-form">
+              <h1>Carrinho</h1>
+              <p>Digite as informações do seu endereço abaixo:</p>
+            </div>
+            <div class="info-content-form">
+              <div class="line-form">
+                <div class="group-form">
+                  <label>Nome completo<span>*</span></label>
+                  <input type="text" name="fullName" id="fullName" placeholder="Nome completo">
+                </div>
+                <div class="group-form">
+                  <label>CPF<span>*</span></label>
+                  <input type="text" name="cpf" id="cpf" placeholder="CPF">
+                </div>
+                <div class="group-form">
+                  <label>RG<span>*</span></label>
+                  <input type="text" name="rg" id="rg" placeholder="RG">
+                </div>
+              </div>
+
+              <div class="line-form">
+                <div class="group-form input-cep">
+                  <label>CEP<span>*</span></label>
+                  <input type="text" name="cep" id="cep" placeholder="CEP">
+                  <div class="search-cep">
+                    <img src="./assets/search.svg" alt="Code Start" onclick="buscarCep()">
+                  </div>
+                </div>
+                <div class="group-form">
+                  <label>Cidade<span>*</span></label>
+                  <input type="text" name="cidade" id="city" placeholder="cidade">
+                </div>
+                <div class="group-form">
+                  <label>Estado<span>*</span></label>
+                  <input type="text" name="estaco" id="state" placeholder="Estado">
+                </div>
+              </div>
+
+              <div class="line-form">
+                <div class="group-form">
+                  <label>Bairro<span>*</span></label>
+                  <input type="text" name="neighborhood" id="neighborhood" placeholder="Bairro">
+                </div>
+                <div class="group-form">
+                  <label>Rua<span>*</span></label>
+                  <input type="text" name="street" id="street" placeholder="Rua">
+                </div>
+                <div class="group-form">
+                  <label>Número/Complemento<span>*</span></label>
+                  <input type="text" name="number" id="number" placeholder="Número/Complemento">
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="info-product-order">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Preço</th>
+                  <th>Qtde</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+            <div class="send-order">
+              <input type="button" value="Limpar carrinho">
+              <input type="button" value="Reservar pedido">
+            </div>
+          </div>
+        </div>
+        <div class="infos-order">
+          <h1>Resumo</h1>
+          <h2>Resumo da sua compra</h2>
+          <h3>Nesse resumo incluímos o preço dos itens com o frete.</h3>
+          <div class="line-info-order">
+            <p>Subtotal</p>
+            <p>R$<span id="subitotal-value">0</span></p>
+          </div>
+          <div class="line-info-order">
+            <p>Envio</p>
+            <p>R$<span id="shipment-value">150</span></p>
+          </div>
+          <span class="legend-order">(7 dias úteis para entrega em qualquer parte da cidade)</span>
+          <div class="line-info-order">
+            <p>Total do pedido</p>
+            <p class="total-order">R$ <span id="total-order-value">0</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="quality">
+    <div class="container">
+      <div class="info-quality">
+        <div class="card-quality">
+          <img src="./assets/support.svg" alt="suport Code Start">
+          <h1>Suporte</h1>
+          <h2>Nosso suporte funciona de Segunda à Sexta de 09h às 17h30</h2>
+        </div>
+        <div class="card-quality">
+          <img src="./assets/guarantee.svg" alt="garantia Code Start">
+          <h1>Garantia</h1>
+          <h2>Nossa garantia é de 1 ano após a compra de qualquer equipamento</h2>
+        </div>
+        <div class="card-quality">
+          <img src="./assets/menor-preco.svg" alt="melhor preço Code Start">
+          <h1>Melhor Preço</h1>
+          <h2>Todos os nossos produtos estão pelo menos 20% mais baratos do que os concorrentes</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <div class="container">
+      <div class="newsletter-footer">
+        <div class="titles-newsletter">
+          <h1>Assine nossa newsletter</h1>
+          <h2>Fique por dentro das melhores ofertas da loja</h2>
+        </div>
+        <div class="input-form-newsletter">
+          <input type="text" id="newsletter-email" placeholder="seu e-mail" class="input-newsletter">
+          <input type="submit" value="Enviar">
+        </div>
+      </div>
+      <div class="infos-footer">
+        <div class="card-footer">
+          <span>Endereço</span>
+          <p>Rua da Code Start, 123</p>
+          <p>Telefone: <a href="tel:+5531">(31) 99999 - 9999</a></p>
+          <p>Horário: Segunda-Sexta: 9:00 - 17:30 </p>
+          <p>E-mail: <a href="mailto:contato@icodestart.com">contato@icodestart.com</a></p>
+        </div>
+      </div>
+      <div class="additional-infos-footer">
+        <div class="social-icons-footer">
+          <img src="./assets/footer/facebook.svg" alt="Facebook">
+          <img src="./assets/footer/instagram.svg" alt="">
+        </div>
+        <div class="credt-cards-accepted">
+          <img src="./assets/footer/paypal.svg" alt="cartão paypal">
+          <img src="./assets/footer/visa.svg" alt="cartão visa">
+          <img src="./assets/footer/maestro.svg" alt="maestro maestro">
+          <img src="./assets/footer/discover.svg" alt="cartão discover">
+          <img src="./assets/footer/american-express.svg" alt="cartão american express ">
+        </div>
+        <div class="copy">
+          <span>Copyright &copy; 2023 Code Start</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -47,8 +47,10 @@
         <div class="action-icons">
           <img src="./assets/search.svg" alt="Busca" class="search">
           <div class="cart">
-            <img src="./assets/cart.svg" alt="Carrinho de compra">
-            <p class="item-cart">0</p>
+            <a href="cart.html">
+              <img src="./assets/cart.svg" alt="Carrinho de compra">
+              <p class="item-cart">0</p>
+            </a>
           </div>
           <div class="mobile-menu-icon">&#9776;</div> <!--cria o meu sanduiche-->
         </div>
@@ -886,13 +888,13 @@
 
   <section id="contact">
     <div class="container">
-      <div class="content-contact-form">
+      <div class="general-content-form">
         <form>
-          <div class="texts-form-contact">
+          <div class="titles-form"> <!--texts-form-contact-->
             <h1>Entre em contato</h1>
             <p>Se você tiver qualquer dúvida, você pode ligar para a nossa loja ou enviar uma mensagem no formulário de contato abaixo!</p>
           </div>
-          <div class="info-contact-form">
+          <div class="info-content-form">
             <div class="line-form">
               <div class="group-form">
                 <label>Nome <span>*</span> </label>
@@ -915,7 +917,7 @@
             </div>
             <div class="group-form">
               <label>Mensagem<span>*</span> </label>
-              <textarea name="message" id="message" placeholder="Escreva a sua dúvida" cols="30" rows="10"></textarea>
+              <textarea name="message" id="message" placeholder="Escreva a sua dúvida" cols="10" rows="5"></textarea>
             </div>
           </div>
           <input type="submit" value="Enviar">
@@ -953,6 +955,46 @@
       </div>
     </div>
   </section>
+
+  <footer>
+    <div class="container">
+      <div class="newsletter-footer">
+        <div class="titles-newsletter">
+          <h1>Assine nossa newsletter</h1>
+          <h2>Fique por dentro das melhores ofertas da loja</h2>
+        </div>
+        <div class="input-form-newsletter">
+          <input type="text" id="newsletter-email" placeholder="seu e-mail" class="input-newsletter">
+          <input type="submit" value="Enviar">
+        </div>
+      </div>
+      <div class="infos-footer">
+        <div class="card-footer">
+          <span>Endereço</span>
+          <p>Rua da Code Start, 123</p>
+          <p>Telefone: <a href="tel:+5531">(31) 99999 - 9999</a></p>
+          <p>Horário: Segunda-Sexta: 9:00 - 17:30 </p>
+          <p>E-mail: <a href="mailto:contato@icodestart.com">contato@icodestart.com</a></p>
+        </div>
+      </div>
+      <div class="additional-infos-footer">
+        <div class="social-icons-footer">
+          <img src="./assets/footer/facebook.svg" alt="Facebook">
+          <img src="./assets/footer/instagram.svg" alt="">
+        </div>
+        <div class="credt-cards-accepted">
+          <img src="./assets/footer/paypal.svg" alt="cartão paypal">
+          <img src="./assets/footer/visa.svg" alt="cartão visa">
+          <img src="./assets/footer/maestro.svg" alt="maestro maestro">
+          <img src="./assets/footer/discover.svg" alt="cartão discover">
+          <img src="./assets/footer/american-express.svg" alt="cartão american express ">
+        </div>
+        <div class="copy">
+          <span>Copyright &copy; 2023 Code Start</span>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>

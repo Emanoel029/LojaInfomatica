@@ -24,3 +24,15 @@
   font-weight: normal;
   color: #00000080;
 }
+
+@media screen and (max-width: 1200px) {
+  .info-quality {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+  .infos-contact {
+    width: 400px;
+    margin: 0 auto;
+  }
+}
