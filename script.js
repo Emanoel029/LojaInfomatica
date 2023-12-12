@@ -60,65 +60,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".slider-sponsors");
-  const images = slider.querySelectorAll("img");
+  if (slider) {
+    const images = slider.querySelectorAll("img");
 
-  images.forEach((image) => {
-    const clone = image.cloneNode(true);
-    slider.appendChild(clone);
-  });
+    images.forEach((image) => {
+      const clone = image.cloneNode(true);
+      slider.appendChild(clone);
+    });
 
-  const totalWidth = images.length * (images[0].offsetWidth + 20);
+    const totalWidth = images.length * (images[0].offsetWidth + 20);
 
-  slider.style.width = `${totalWidth}px`;
+    slider.style.width = `${totalWidth}px`;
 
-  let currentPosition = 0;
+    let currentPosition = 0;
 
-  const moveSlider = () => {
-    currentPosition -= 1;
-    if (currentPosition <= -totalWidth / 2) {
-      currentPosition = 0;
-    }
+    const moveSlider = () => {
+      currentPosition -= 1;
+      if (currentPosition <= -totalWidth / 2) {
+        currentPosition = 0;
+      }
 
-    slider.style.transform = `translateX(${currentPosition}px)`;
+      slider.style.transform = `translateX(${currentPosition}px)`;
+      requestAnimationFrame(moveSlider);
+    };
+
     requestAnimationFrame(moveSlider);
-  };
-
-  requestAnimationFrame(moveSlider);
+  }
 });
 
 //Slider Depoimentos
 window.addEventListener("DOMContentLoaded", () => {
   const testimonials = document.querySelectorAll(".testimonial");
-  const controls = document.querySelectorAll(".controls-testimonial span");
-  const firstTestimonial = testimonials[0];
-  const firstControl = controls[0];
+  if (testimonials.length > 0) {
+    const controls = document.querySelectorAll(".controls-testimonial span");
+    const firstTestimonial = testimonials[0];
+    const firstControl = controls[0];
 
-  testimonials.forEach((testimonial) => (testimonial.style.display = "none"));
-  firstTestimonial.style.display = "block";
+    testimonials.forEach((testimonial) => (testimonial.style.display = "none"));
+    firstTestimonial.style.display = "block";
 
-  controls.forEach((control) => {
-    control.addEventListener("click", () => {
-      const targetSlide = control.getAttribute("data-slide");
-      controls.forEach((c) => c.classList.remove("active-testimonial"));
-      control.classList.add("active-testimonial");
+    controls.forEach((control) => {
+      control.addEventListener("click", () => {
+        const targetSlide = control.getAttribute("data-slide");
+        controls.forEach((c) => c.classList.remove("active-testimonial"));
+        control.classList.add("active-testimonial");
 
-      testimonials.forEach(
-        (testimonial) => (testimonial.style.display = "none")
-      );
+        testimonials.forEach(
+          (testimonial) => (testimonial.style.display = "none")
+        );
 
-      const testimonialShow = document.querySelector(
-        `.testimonial[data-slide="${targetSlide}"]`
-      );
+        const testimonialShow = document.querySelector(
+          `.testimonial[data-slide="${targetSlide}"]`
+        );
 
-      testimonialShow.style.display = "block";
+        testimonialShow.style.display = "block";
+      });
     });
-  });
-  firstControl.classList.add("active-testimonial");
+    firstControl.classList.add("active-testimonial");
+  }
 });
 
 //Manipulação do carrinho de produtos
 const productsArray = [];
-
+const neighborhoodShipment = [
+  {
+    neighborhood: "Centro",
+    shiment: 100,
+  },
+  {
+    neighborhood: "Joaquim Tavora",
+    shiment: 100,
+  },
+  {
+    neighborhood: "Papicu",
+    shiment: 180,
+  },
+  {
+    neighborhood: "Montese",
+    shiment: 150,
+  },
+];
 function increaseQuantity(event) {
   const quatityElement =
     event.target.parentElement.querySelector(".number-quantity");
@@ -205,11 +226,17 @@ const inputNeighborhood = document.querySelector("#neighborhood");
 const inputNumber = document.querySelector("#number");
 const savedProductsArray = JSON.parse(localStorage.getItem("productsArray"));
 //faz o valor total do pedido no acumulador
-const totalOrder = savedProductsArray.reduce((accumulator, currentProduct) => {
-  return accumulator + currentProduct.quantity * currentProduct.price;
-}, 0);
+const totalOrder = savedProductsArray
+  ? savedProductsArray.reduce((accumulator, currentProduct) => {
+      return accumulator + currentProduct.quantity * currentProduct.price;
+    }, 0)
+  : 0;
 
-function buscarCep() {
+const subtotal = document.querySelector("#subtotal-value");
+const shipmentInput = document.querySelector("#shipment-value");
+const totalOrderField = document.querySelector("#total-order-value");
+
+function searchCEP() {
   //trim() remove espaço do início e do final
   const typedCep = inputCep.value.trim().replace(/\D/g, "");
 
@@ -224,7 +251,12 @@ function buscarCep() {
     .then((data) => {
       inputCity.value = data.localidade;
       inputState.value = data.uf;
-      inputNeighborhood.value = data.bairro;
+      if (data.bairro) {
+        inputNeighborhood.value = data.bairro;
+        let changeEvent = new Event("change", { bubbles: true });
+        inputNeighborhood.dispatchEvent(changeEvent);
+      }
+
       inputStreet.value = data.logradouro;
     })
     .catch((erro) => {
@@ -236,35 +268,37 @@ function buscarCep() {
 window.addEventListener("DOMContentLoaded", function () {
   const tbody = document.querySelector(".info-product-order tbody");
 
-  for (const product of savedProductsArray) {
-    const row = document.createElement("tr");
-    const nameCell = document.createElement("td");
-    nameCell.innerHTML = `<div class="product-cart">
-      <img src="${product.productimg}" alt="${product.productName}" width="100px"/>
-      ${product.productName}
-    </div>`;
+  if (tbody && savedProductsArray) {
+    for (const product of savedProductsArray) {
+      const row = document.createElement("tr");
+      const nameCell = document.createElement("td");
+      nameCell.innerHTML = `<div class="product-cart">
+        <img src="${product.productimg}" alt="${product.productName}" width="100px"/>
+        ${product.productName}
+      </div>`;
 
-    const priceCell = document.createElement("td");
-    priceCell.textContent = `R$ ${product.price.toFixed(2)}`;
+      const priceCell = document.createElement("td");
+      priceCell.textContent = `R$ ${product.price.toFixed(2)}`;
 
-    const quantityCell = document.createElement("td");
-    quantityCell.textContent = product.quantity;
+      const quantityCell = document.createElement("td");
+      quantityCell.textContent = product.quantity;
 
-    const subtotalCell = document.createElement("td");
-    const subtotal = product.price * product.quantity;
-    subtotalCell.textContent = `R$${subtotal.toFixed(2)}`;
+      const subtotalCell = document.createElement("td");
+      const subtotal = product.price * product.quantity;
+      subtotalCell.textContent = `R$${subtotal.toFixed(2)}`;
 
-    row.appendChild(nameCell);
-    row.appendChild(priceCell);
-    row.appendChild(quantityCell);
-    row.appendChild(subtotalCell);
-    tbody.appendChild(row);
+      row.appendChild(nameCell);
+      row.appendChild(priceCell);
+      row.appendChild(quantityCell);
+      row.appendChild(subtotalCell);
+      tbody.appendChild(row);
+    }
   }
 });
 
 //texto que vai ser enviado por wpp
 
-function finalizarPedido() {
+function finishOrder() {
   const fullName = document.querySelector("#fullName").value;
   const rg = document.querySelector("#rg").value;
   const cpf = document.querySelector("#cpf").value;
@@ -300,7 +334,7 @@ function finalizarPedido() {
 }
 
 // limpa o carrinho
-function limparCarrinho() {
+function clearCart() {
   localStorage.removeItem("productsArray");
   inputCep.value = "";
   inputStreet.value = "";
@@ -311,14 +345,32 @@ function limparCarrinho() {
   location.reload();
 }
 
-//contabiliza o total
-window.addEventListener("DOMContentLoaded", function () {
-  const subtotal = document.querySelector("#subtotal-value");
-  subtotal.textContent = totalOrder;
+function updateInfosOrder() {
+  if (subtotal) {
+    subtotal.textContent = totalOrder;
+  }
+  if (
+    shipmentInput &&
+    totalOrderField &&
+    savedProductsArray.length > 0 &&
+    inputNeighborhood.value !== ""
+  ) {
+    const foundedNeighborhood = neighborhoodShipment.find(
+      (info) => info.neighborhood === inputNeighborhood.value
+    );
 
-  const shipmentValue = document.querySelector("#shipment-value").textContent;
+    const shipmentValue = foundedNeighborhood
+      ? foundedNeighborhood.shiment
+      : 150;
+    shipmentInput.textContent = shipmentValue;
 
-  const totalOrderField = document.querySelector("#total-order-value");
+    totalOrderField.textContent =
+      Number(subtotal.textContent) + Number(shipmentValue);
+  }
+}
 
-  totalOrderField.textContent = Number(totalOrder) + Number(shipmentValue);
-});
+if (inputNeighborhood) {
+  inputNeighborhood.addEventListener("change", function () {
+    updateInfosOrder();
+  });
+}
