@@ -159,7 +159,7 @@ function addProductTocart(event) {
 
   if (quantity > 0) {
     if (existingProductIndex !== -1) {
-      productsArray[existingProductIndex].quantity - quantity;
+      productsArray[existingProductIndex].quantity = quantity;
     } else {
       productsArray.push({
         productName: productName,
@@ -173,6 +173,8 @@ function addProductTocart(event) {
       productsArray.splice(existingProductIndex, 1);
     }
   }
+
+  localStorage.setItem("productsArray", JSON.stringify(productsArray));
 
   updateCards();
 }
@@ -201,6 +203,11 @@ const inputCity = document.querySelector("#city");
 const inputState = document.querySelector("#state");
 const inputNeighborhood = document.querySelector("#neighborhood");
 const inputNumber = document.querySelector("#number");
+const savedProductsArray = JSON.parse(localStorage.getItem("productsArray"));
+//faz o valor total do pedido no acumulador
+const totalOrder = savedProductsArray.reduce((accumulator, currentProduct) => {
+  return accumulator + currentProduct.quantity * currentProduct.price;
+}, 0);
 
 function buscarCep() {
   //trim() remove espaço do início e do final
@@ -229,12 +236,13 @@ function buscarCep() {
 window.addEventListener("DOMContentLoaded", function () {
   const tbody = document.querySelector(".info-product-order tbody");
 
-  for (const product of productsArray) {
-    const row = this.document.createElement("tr");
-    const nameCel = this.document.createElement("td");
-    nameCel.innerHTML = `<div class="product-cart">
-                        <img src="${product.product}" alt="${product.productName}" width="100px"/>
-                        ${product.productName} </div>`;
+  for (const product of savedProductsArray) {
+    const row = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    nameCell.innerHTML = `<div class="product-cart">
+      <img src="${product.productimg}" alt="${product.productName}" width="100px"/>
+      ${product.productName}
+    </div>`;
 
     const priceCell = document.createElement("td");
     priceCell.textContent = `R$ ${product.price.toFixed(2)}`;
@@ -245,5 +253,72 @@ window.addEventListener("DOMContentLoaded", function () {
     const subtotalCell = document.createElement("td");
     const subtotal = product.price * product.quantity;
     subtotalCell.textContent = `R$${subtotal.toFixed(2)}`;
+
+    row.appendChild(nameCell);
+    row.appendChild(priceCell);
+    row.appendChild(quantityCell);
+    row.appendChild(subtotalCell);
+    tbody.appendChild(row);
   }
+});
+
+//texto que vai ser enviado por wpp
+
+function finalizarPedido() {
+  const fullName = document.querySelector("#fullName").value;
+  const rg = document.querySelector("#rg").value;
+  const cpf = document.querySelector("#cpf").value;
+
+  const cep = inputCep.value;
+  const street = inputStreet.value;
+  const city = inputCity.value;
+  const state = inputState.value;
+  const neighborhood = inputNeighborhood.value;
+  const number = inputNumber.value;
+
+  let textFormatted = `Olá, gostaria de fazer um pedido para a loja.
+  Meus dados são:
+  Nome: ${fullName}
+  RG: ${rg}
+  CPF: ${cpf}
+  Endereço: Rua: ${street}, cidade: ${city}, Estado: ${state}, Bairro: ${neighborhood},
+  Numero/complemento: ${number}, CEP: ${cep}
+  Os produtos que eu escolhi são:`;
+
+  savedProductsArray.forEach((product) => {
+    textFormatted += `
+    Nome do produto: ${product.productName},
+    Preço: R$ ${product.price},
+    Quantidade: ${product.quantity}`;
+  });
+
+  textFormatted += `
+  Total do pedido: R$ ${totalOrder}`;
+
+  const textEncoded = encodeURIComponent(textFormatted);
+  window.open(`https://wa.me/5585996494013?text=${textEncoded}`);
+}
+
+// limpa o carrinho
+function limparCarrinho() {
+  localStorage.removeItem("productsArray");
+  inputCep.value = "";
+  inputStreet.value = "";
+  inputCity.value = "";
+  inputState.value = "";
+  inputNeighborhood.value = "";
+  inputNumber.value = "";
+  location.reload();
+}
+
+//contabiliza o total
+window.addEventListener("DOMContentLoaded", function () {
+  const subtotal = document.querySelector("#subtotal-value");
+  subtotal.textContent = totalOrder;
+
+  const shipmentValue = document.querySelector("#shipment-value").textContent;
+
+  const totalOrderField = document.querySelector("#total-order-value");
+
+  totalOrderField.textContent = Number(totalOrder) + Number(shipmentValue);
 });

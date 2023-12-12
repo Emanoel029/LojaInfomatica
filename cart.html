@@ -140,8 +140,8 @@
               </tbody>
             </table>
             <div class="send-order">
-              <input type="button" value="Limpar carrinho">
-              <input type="button" value="Reservar pedido">
+              <input type="button" value="Limpar carrinho" onclick="limparCarrinho()">
+              <input type="button" value="Reservar pedido" onclick="finalizarPedido()">
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
           <h3>Nesse resumo incluímos o preço dos itens com o frete.</h3>
           <div class="line-info-order">
             <p>Subtotal</p>
-            <p>R$<span id="subitotal-value">0</span></p>
+            <p>R$<span id="subtotal-value">0</span></p>
           </div>
           <div class="line-info-order">
             <p>Envio</p>
