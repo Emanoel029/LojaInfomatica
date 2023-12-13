@@ -141,14 +141,23 @@
             </table>
             <div class="send-order">
               <input type="button" value="Limpar carrinho" onclick="clearCart()">
-              <input type="button" value="Reservar pedido" onclick="finishOrder()">
+              <input type="button" value="Reservar pedido" onclick="finishOrder()" id="send-order" class="disabled-send-order">
             </div>
           </div>
         </div>
         <div class="infos-order">
           <h1>Resumo</h1>
           <h2>Resumo da sua compra</h2>
-          <h3>Nesse resumo incluímos o preço dos itens com o frete.</h3>
+          <h3>Nesse resumo incluímos o preço dos<br> itens com o frete.</h3>
+          <div class="add-cupom">
+            <input type="text" placeholder="Adicione um cupom" id="discount" style="width: 190px; height: 40px;">
+            <input type="button" value="Adicionar" onclick="addCupom()">
+          </div>
+          <span class="cupom-erro">Cupom inexistente ou inválido</span>
+          <div class="cupom-added">
+            <h4>Cupom adicionado:</h4>
+            <span></span>
+          </div>
           <div class="line-info-order">
             <p>Subtotal</p>
             <p>R$<span id="subtotal-value">0</span></p>

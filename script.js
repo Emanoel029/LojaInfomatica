@@ -125,21 +125,24 @@ const productsArray = [];
 const neighborhoodShipment = [
   {
     neighborhood: "Centro",
-    shiment: 100,
+    shipment: 100,
   },
   {
     neighborhood: "Joaquim Tavora",
-    shiment: 100,
+    shipment: 100,
   },
   {
     neighborhood: "Papicu",
-    shiment: 180,
+    shipment: 180,
   },
   {
     neighborhood: "Montese",
-    shiment: 150,
+    shipment: 150,
   },
 ];
+
+let dataCartIsEmpty = true;
+
 function increaseQuantity(event) {
   const quatityElement =
     event.target.parentElement.querySelector(".number-quantity");
@@ -156,10 +159,10 @@ function decreaseQuantity(event) {
     quatityElement.textContent = quantity - 1;
   }
 }
-
-function updateCards() {
+//updateCards
+function updateCart(quantityProducts) {
   const cart = document.querySelector(".item-cart");
-  cart.textContent = productsArray.length;
+  cart.textContent = quantityProducts;
 }
 
 function addProductTocart(event) {
@@ -197,7 +200,7 @@ function addProductTocart(event) {
 
   localStorage.setItem("productsArray", JSON.stringify(productsArray));
 
-  updateCards();
+  updateCart(productsArray ? productsArray.length : 0);
 }
 
 const increaseButtons = document.querySelectorAll(".increase-quantity");
@@ -235,6 +238,14 @@ const totalOrder = savedProductsArray
 const subtotal = document.querySelector("#subtotal-value");
 const shipmentInput = document.querySelector("#shipment-value");
 const totalOrderField = document.querySelector("#total-order-value");
+
+window.addEventListener("DOMContentLoaded", function () {
+  updateCart(
+    //Add cupom
+
+    savedProductsArray ? savedProductsArray.length : 0
+  );
+});
 
 function searchCEP() {
   //trim() remove espaço do início e do final
@@ -342,12 +353,13 @@ function clearCart() {
   inputState.value = "";
   inputNeighborhood.value = "";
   inputNumber.value = "";
+  dataCartIsEmpty = true;
   location.reload();
 }
 
-function updateInfosOrder() {
+function updateInfosOrder(discount) {
   if (subtotal) {
-    subtotal.textContent = totalOrder;
+    subtotal.textContent = totalOrder - discount;
   }
   if (
     shipmentInput &&
@@ -360,7 +372,7 @@ function updateInfosOrder() {
     );
 
     const shipmentValue = foundedNeighborhood
-      ? foundedNeighborhood.shiment
+      ? foundedNeighborhood.shipment
       : 150;
     shipmentInput.textContent = shipmentValue;
 
@@ -371,6 +383,77 @@ function updateInfosOrder() {
 
 if (inputNeighborhood) {
   inputNeighborhood.addEventListener("change", function () {
-    updateInfosOrder();
+    dataCartIsEmpty = false;
+    updateInfosOrder(0);
+    updateButtonSendOrder();
   });
 }
+//Add cupom
+
+const availabelCupons = [
+  {
+    value: "FREE10",
+    discount: 10,
+  },
+  {
+    value: "FREE20",
+    discount: 20,
+  },
+];
+
+function addCupom() {
+  const inputCoupon = document.querySelector("#discount");
+  const validCoupon = availabelCupons.find(
+    (cupom) => cupom.value === inputCoupon.value
+  );
+  const textCoupon = document.querySelector(".cupom-added span");
+  const errorCoupon = document.querySelector(".cupom-erro");
+  errorCoupon.style.display = "none";
+
+  if (validCoupon) {
+    textCoupon.textContent = validCoupon.value;
+    updateInfosOrder(validCoupon.discount);
+  } else {
+    errorCoupon.style.display = "block";
+  }
+}
+
+function updateButtonSendOrder() {
+  const input = document.querySelector("#send-order");
+  if (input && !dataCartIsEmpty) {
+    input.classList.remove("disabled-send-order");
+  } else {
+    input.classList.add("disabled-send-order");
+  }
+}
+
+//Scroll da tela
+
+function scrollToSection(sectionId) {
+  const section = document.querySelector(sectionId);
+
+  if (section) {
+    let scrollOffset = 0;
+    //isso faz com q fica no meio da tela
+    scrollOffset =
+      section.offsetTop - (window.innerHeight - section.clientHeight) / 2;
+
+    window.scrollTo({
+      top: scrollOffset,
+      behavior: "smooth", //para ser suave
+    });
+  }
+}
+
+//Para percorrer cada link
+window.addEventListener("DOMContentLoaded", function () {
+  const links = this.document.querySelectorAll("nav a");
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const sectionId = link.getAttribute("href");
+      scrollToSection(sectionId);
+    });
+  });
+});
