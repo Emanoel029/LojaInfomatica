@@ -889,39 +889,44 @@
   <section id="contact">
     <div class="container">
       <div class="general-content-form">
-        <form>
-          <div class="titles-form"> <!--texts-form-contact-->
-            <h1>Entre em contato</h1>
-            <p>Se você tiver qualquer dúvida, você pode ligar para a nossa loja ou enviar uma mensagem no formulário de contato abaixo!</p>
-          </div>
-          <div class="info-content-form">
-            <div class="line-form">
-              <div class="group-form">
-                <label>Nome <span>*</span> </label>
-                <input type="text" id="name" placeholder="Nome">
+        <div class="intern-content-form">
+          <form>
+            <div class="titles-form"> <!--texts-form-contact-->
+              <h1>Entre em contato</h1>
+              <p>Se você tiver qualquer dúvida, você pode ligar para a nossa loja ou enviar uma mensagem no formulário de contato abaixo!</p>
+            </div>
+            <div class="info-content-form">
+              <div class="line-form">
+                <div class="group-form">
+                  <label>Nome <span>*</span> </label>
+                  <input type="text" id="name" placeholder="Nome">
+                </div>
+                <div class="group-form">
+                  <label>Assunto <span>*</span> </label>
+                  <input type="text" id="subject" placeholder="Assunto">
+                </div>
+              </div>
+              <div class="line-form">
+                <div class="group-form">
+                  <label>Telefone <span>*</span> </label>
+                  <input type="text" id="cellphone" placeholder="Telefone">
+                </div>
+                <div class="group-form">
+                  <label>E-mail <span>*</span> </label>
+                  <input type="email" id="email" placeholder="E-mail">
+                </div>
               </div>
               <div class="group-form">
-                <label>Assunto <span>*</span> </label>
-                <input type="text" id="subject" placeholder="Assunto">
+                <label>Mensagem<span>*</span> </label>
+                <textarea name="message" id="message" placeholder="Escreva a sua dúvida" cols="10" rows="5"></textarea>
               </div>
             </div>
-            <div class="line-form">
-              <div class="group-form">
-                <label>Telefone <span>*</span> </label>
-                <input type="text" id="cellphone" placeholder="Telefone">
-              </div>
-              <div class="group-form">
-                <label>E-mail <span>*</span> </label>
-                <input type="email" id="email" placeholder="E-mail">
-              </div>
-            </div>
-            <div class="group-form">
-              <label>Mensagem<span>*</span> </label>
-              <textarea name="message" id="message" placeholder="Escreva a sua dúvida" cols="10" rows="5"></textarea>
-            </div>
-          </div>
-          <input type="submit" value="Enviar">
-        </form>
+            <input type="submit" value="Enviar">
+          </form>
+          <p id="loading" style="display: none;">Carregando..</p>
+          <p id="success-message" style="display: none;">Mensagem enviada com sucesso!</p>
+          <p id="error-message" style="display: none;">Erro ao enviar mensagem. Envie um e-mail para contato@icodestart.com</p>
+        </div>
         <div class="infos-contact">
           <div class="line-contact-info">
             <img src="./assets/address-icon.svg" alt="Endereço Code Start">

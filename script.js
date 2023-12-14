@@ -457,3 +457,60 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+//Contato do site
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
+  const sucessMessage = document.getElementById("success-message");
+  const errorMessage = document.getElementById("error-message");
+  const loading = document.getElementById("loading");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const cellphone = document.getElementById("cellphone").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
+
+    form.style.display = "none";
+    sucessMessage.style.display = "none";
+    errorMessage.style.display = "none";
+    loading.style.display = "block";
+
+    const data = {
+      to: "emanoelpontes8@gmail.com",
+      from: "emanoelpontes8@hotmail.com",
+      subject: "contato do site",
+      text: "contato do site",
+      html: `<p>nome: ${name}</p><br><p>Email: ${email}</p><br/>
+      <p>Celular: ${cellphone}</p><br/><p>Assunto: ${subject}</p><br/>
+      <p>Mensagem: ${message}`,
+    };
+
+    fetch("https://nodemailer-91ib.onrender.com/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.ok) {
+          loading.style.display = "none";
+          sucessMessage.style.display = "block";
+        } else {
+          loading.style.display = "none";
+          errorMessage.style.display = "block";
+          console.log("Erro na resposnta da API");
+        }
+      })
+      .catch((error) => {
+        loading.style.display = "none";
+        errorMessage.style.display = "block";
+        console.log(`Erro na resposnta da API: ${error}`);
+      });
+  });
+});
