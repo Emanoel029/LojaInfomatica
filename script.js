@@ -305,6 +305,35 @@ window.addEventListener("DOMContentLoaded", function () {
       tbody.appendChild(row);
     }
   }
+  const sectionProductsMobile = document.querySelector(
+    ".info-products-order-mobile"
+  );
+
+  if (sectionProductsMobile && savedProductsArray) {
+    for (const product of savedProductsArray) {
+      const ul = document.createElement("ul");
+      const nameProduct = document.createElement("li");
+      nameProduct.innerHTML = `<img src="${product.productimg}" alt="${product.productName}" width="100px"/></spam>`;
+
+      const priceProduct = document.createElement("li");
+      priceProduct.innerHTML = `Preço: <span>R$ ${product.price.toFixed(
+        2
+      )}</span> `;
+
+      const quantityProduct = document.createElement("li");
+      quantityProduct.innerHTML = `Qtde: <span>${product.quantity}</span>`;
+
+      const subtotalProduct = document.createElement("li");
+      const subtotalP = product.price * product.quantity;
+      subtotalProduct.innerHTML = `<span>R$ ${subtotalP.toFixed(2)}`;
+
+      ul.appendChild(nameProduct);
+      ul.appendChild(priceProduct);
+      ul.appendChild(quantityProduct);
+      ul.appendChild(subtotalProduct);
+      sectionProductsMobile.appendChild(ul);
+    }
+  }
 });
 
 //texto que vai ser enviado por wpp

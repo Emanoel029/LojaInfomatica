@@ -1,3 +1,11 @@
+.title-section-products {
+  font-size: 18px;
+  color: #00000080;
+  border-bottom: 1px solid #a2a6b0;
+  margin-bottom: 20px;
+  display: none;
+}
+
 .product-filter-brands ul {
   display: flex;
 }
@@ -32,4 +40,27 @@
 .product-cover img {
   height: fit-content; /*a img vai tentar se adaptar ao tamanho do container*/
   width: 300px;
+}
+.notebook-products,
+.cpu-products,
+.monitor-products {
+  display: flex;
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 1200px) {
+  .product-cover {
+    display: none;
+  }
+  .title-section-products {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .general-content-card-products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
